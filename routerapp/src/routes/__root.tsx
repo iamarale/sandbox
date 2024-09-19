@@ -10,13 +10,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <>
-      <div className="container mx-auto p-2 flex gap-2 text-lg">
+      <div className="container mx-auto p-2 flex gap-2 text-lg ">
         <Header />
       </div>
       <hr />
-      <div className="container mx-auto p-2">
-        <Outlet />
-      </div>
+      <Outlet />
       <TanStackRouterDevtools position="bottom-right" />
     </>
   );
