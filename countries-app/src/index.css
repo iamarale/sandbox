@@ -9,6 +9,6 @@ body,
 #root {
   font-family: "Afacad Flux";
 
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
 }
