@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import AllCountries from "./components/allCountries";
-import FilterCountries from "./components/filterCountries";
-
+import AllCountries from "./components/AllCountries";
 interface Country {
   name: {
     common: string;
@@ -48,7 +46,7 @@ export default function App() {
   return (
     <main>
       <select
-        className="bg-zinc-800 text-zinc-200 mt-12 mb-4 px-2 py-1  rounded-md"
+        className="mb-4 mt-12 rounded-md bg-zinc-800 px-2 py-1 text-zinc-200"
         onChange={handleChange}
       >
         <option value="population">Population</option>
