@@ -14,6 +14,7 @@ interface Country {
 }
 
 export default function App() {
+  // states
   const [data, setData] = useState<Country[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,6 +53,7 @@ export default function App() {
     getAllCountries();
   }, []);
 
+  // if there is an error
   if (error)
     return (
       <div className="flex h-screen items-center justify-center">
@@ -59,12 +61,15 @@ export default function App() {
       </div>
     );
 
+  // while loading data...
   if (isLoading)
     return (
       <div className="flex h-screen items-center justify-center">
         <h1>Loading... this will only take a few seconds</h1>
       </div>
     );
+
+  // renders data
   return (
     <main className="items-center justify-center">
       <SelectFilter setSelectedFilter={setSelectedFilter} />
