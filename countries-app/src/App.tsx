@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AllCountries from "./components/AllCountries";
+import SelectFilter from "./components/SelectFilter";
 interface Country {
   name: {
     common: string;
@@ -36,7 +37,7 @@ export default function App() {
     getAllCountries();
   }, []);
 
-  function handleChange(e) {
+  function handleFilterChange(e) {
     setSelectedFilter(e.target.value);
   }
 
@@ -45,14 +46,7 @@ export default function App() {
 
   return (
     <main>
-      <select
-        className="mb-4 mt-12 rounded-md bg-zinc-800 px-2 py-1 text-zinc-200"
-        onChange={handleChange}
-      >
-        <option value="population">Population</option>
-        <option value="region">Region</option>
-        <option value="capital">Capital</option>
-      </select>
+      <SelectFilter handleChange={handleFilterChange} />
       {data && (
         <AllCountries selectedFilter={selectedFilter} countriesData={data} />
       )}
