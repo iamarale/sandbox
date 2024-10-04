@@ -37,16 +37,11 @@ export default function App() {
     getAllCountries();
   }, []);
 
-  function handleFilterChange(e) {
-    setSelectedFilter(e.target.value);
-  }
-
   if (isLoading) return <h1>Loading</h1>;
   if (error) return <h1>Error.. {error}</h1>;
-
   return (
     <main>
-      <SelectFilter handleChange={handleFilterChange} />
+      <SelectFilter setSelectedFilter={setSelectedFilter} />
       {data && (
         <AllCountries selectedFilter={selectedFilter} countriesData={data} />
       )}
