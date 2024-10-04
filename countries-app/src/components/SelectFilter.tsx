@@ -11,6 +11,7 @@ export default function SelectFilter({ setSelectedFilter }: FilterProps) {
       className="rounded-md bg-zinc-800 p-2 text-zinc-200"
       onChange={handleFilterChange}
     >
+      <option value="all">all</option>
       <option value="population">Population</option>
       <option value="region">Region</option>
       <option value="capital">Capital</option>

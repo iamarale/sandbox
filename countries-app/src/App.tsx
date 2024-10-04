@@ -20,6 +20,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>("population");
+  const [searchCountry, setSearchCountry] = useState<string>("all");
 
   //   Api Call
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function App() {
 
         // fetches data from api
         const res = await fetch(`https://restcountries.com/v3.1/all`);
+        // const res = await fetch(`https://restcountries.com/v3.1/name/${searchCountry}`);
 
         // checks of ok is false
         if (!res.ok) {
@@ -75,7 +77,11 @@ export default function App() {
     <main>
       {/* Search and filter */}
       <header className="mb-4 mt-12 flex items-center justify-between">
-        <SearchInput />
+        <SearchInput
+          searchCountry={searchCountry}
+          setSearchCountry={setSearchCountry}
+          countriesData={data}
+        />
         <SelectFilter setSelectedFilter={setSelectedFilter} />
       </header>
 
