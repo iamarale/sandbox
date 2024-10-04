@@ -8,7 +8,7 @@ export default function SelectFilter({ setSelectedFilter }: FilterProps) {
 
   return (
     <select
-      className="mb-4 mt-12 rounded-md bg-zinc-800 px-2 py-1 text-zinc-200"
+      className="rounded-md bg-zinc-800 p-2 text-zinc-200"
       onChange={handleFilterChange}
     >
       <option value="population">Population</option>

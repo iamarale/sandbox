@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AllCountries from "./components/AllCountries";
 import SelectFilter from "./components/SelectFilter";
+import SearchInput from "./components/SearchInput";
 interface Country {
   name: {
     common: string;
@@ -71,8 +72,14 @@ export default function App() {
 
   // renders data
   return (
-    <main className="items-center justify-center">
-      <SelectFilter setSelectedFilter={setSelectedFilter} />
+    <main>
+      {/* Search and filter */}
+      <header className="mb-4 mt-12 flex items-center justify-between">
+        <SearchInput />
+        <SelectFilter setSelectedFilter={setSelectedFilter} />
+      </header>
+
+      {/* All Countries */}
       {data && (
         <AllCountries selectedFilter={selectedFilter} countriesData={data} />
       )}
