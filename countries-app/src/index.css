@@ -10,5 +10,6 @@ body,
   font-family: "Afacad Flux";
 
   min-height: 100%;
-  min-width: 100%;
+  width: 100%;
+  @apply bg-zinc-900;
 }

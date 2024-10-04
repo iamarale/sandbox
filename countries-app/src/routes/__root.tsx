@@ -5,9 +5,9 @@ import Header from "../components/Header";
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div className="h-full bg-zinc-900 text-zinc-300">
+      <div className="flex h-full flex-col bg-zinc-900 text-zinc-300">
         <Header />
-        <div className="container mx-auto p-2">
+        <div className="container mx-auto h-full p-2">
           <Outlet />
         </div>
       </div>
