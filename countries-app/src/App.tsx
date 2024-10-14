@@ -1,93 +1,102 @@
 import { useEffect, useState } from "react";
-import AllCountries from "./components/AllCountries";
-import SelectFilter from "./components/SelectFilter";
-import SearchInput from "./components/SearchInput";
-interface Country {
-  name: {
-    common: string;
-  };
-  population: number;
+import DisplayCountry from "./components/DisplayCountry";
+import SearchCountries from "./components/SearchCountries";
+import CountryFilter from "./components/CountryFilter";
+
+// types
+export interface CountryTypes {
+  name: { common: string; official: string };
+  capital: string;
+  currencies: { code: string; name: string }[];
+  callingCodes: string[];
   region: string;
-  capital: string[];
-  flags: {
-    png: string;
-  };
+  subregion: string;
+  borders: string[];
+  population: number;
+  languages: { code: string; name: string }[];
+  nativeName: { common: string; official: string };
+  translations: { common: string; official: string }[];
+  timezones: string[];
+  flags: { png: string };
 }
 
 export default function App() {
-  // states
-  const [data, setData] = useState<Country[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // state
+  const [data, setData] = useState<CountryTypes[] | null>(null);
+  const [searchCountry, setSearchCountry] = useState<string>("");
+  const [selectFilter, setSelectFilter] = useState<string>("all");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedFilter, setSelectedFilter] = useState<string>("population");
-  const [searchCountry, setSearchCountry] = useState<string>("all");
+  const [error, setError] = useState<string | null>(null);
 
-  //   Api Call
+  // data fetching
   useEffect(() => {
     async function getAllCountries() {
       try {
         setIsLoading(true);
+        setError(null); // Reset the error state before fetching
+        let res;
 
-        // fetches data from api
-        const res = await fetch(`https://restcountries.com/v3.1/all`);
-        // const res = await fetch(`https://restcountries.com/v3.1/name/${searchCountry}`);
-
-        // checks of ok is false
-        if (!res.ok) {
-          setIsLoading(false);
-          throw new Error("Something went wrong");
+        if (searchCountry === "all" || searchCountry === "") {
+          res = await fetch(`https://restcountries.com/v3.1/all`);
+        } else {
+          res = await fetch(
+            `https://restcountries.com/v3.1/name/${searchCountry}`,
+          );
         }
 
-        // parses data to json
-        const resData: Country[] = await res.json();
+        console.log(res);
+        // Error Handling
+        if (!res.ok) {
+          throw new Error(
+            "Error fetching data. Please refresh or wait a while.",
+          );
+        }
 
-        // sets data to state
+        const resData = await res.json();
         setData(resData);
-        console.log(data);
-
-        //resets state
-        setIsLoading(false);
+        console.log(resData[0]);
       } catch (e: any) {
-        // Stop loading and set error message
-        setIsLoading(false);
+        console.error(e);
         setError(e.message);
+      } finally {
+        setIsLoading(false);
       }
     }
+
     getAllCountries();
-  }, []);
+  }, [searchCountry]);
 
-  // if there is an error
-  if (error)
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <h1>Error: {error}</h1>
-      </div>
-    );
+  // filter data by region
+  const filteredData = data?.filter((country) => {
+    if (selectFilter === "all") return true;
+    return country.region.toLowerCase() === selectFilter;
+  });
 
-  // while loading data...
-  if (isLoading)
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <h1>Loading... this will only take a few seconds</h1>
-      </div>
-    );
-
-  // renders data
   return (
     <main>
-      {/* Search and filter */}
-      <header className="mb-4 mt-12 flex items-center justify-between">
-        <SearchInput
+      <header className="mb-4 mt-12 flex items-center gap-2">
+        <SearchCountries
           searchCountry={searchCountry}
           setSearchCountry={setSearchCountry}
-          countriesData={data}
         />
-        <SelectFilter setSelectedFilter={setSelectedFilter} />
+        <CountryFilter
+          selectFilter={selectFilter}
+          setSelectFilter={setSelectFilter}
+        />
       </header>
 
-      {/* All Countries */}
-      {data && (
-        <AllCountries selectedFilter={selectedFilter} countriesData={data} />
+      {/* Error handling */}
+      {error && <div className="text-red-500">{error}</div>}
+
+      {/* Loading and Data Display */}
+      {isLoading ? (
+        <h1 className="text-2xl font-bold uppercase">
+          Loading data... Please be patient{" "}
+        </h1>
+      ) : (
+        data && (
+          <DisplayCountry data={filteredData!} searchCountry={searchCountry} />
+        )
       )}
     </main>
   );
