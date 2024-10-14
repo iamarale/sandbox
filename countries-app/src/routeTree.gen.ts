@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as CountryIdImport } from './routes/country/$id'
 
 // Create Virtual Routes
 
@@ -25,6 +26,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const CountryIdRoute = CountryIdImport.update({
+  path: '/country/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -36,6 +42,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/country/$id': {
+      id: '/country/$id'
+      path: '/country/$id'
+      fullPath: '/country/$id'
+      preLoaderRoute: typeof CountryIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -43,32 +56,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/country/$id': typeof CountryIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/country/$id': typeof CountryIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/country/$id': typeof CountryIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/country/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/country/$id'
+  id: '__root__' | '/' | '/country/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  CountryIdRoute: typeof CountryIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  CountryIdRoute: CountryIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -83,11 +101,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/country/$id"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/country/$id": {
+      "filePath": "country/$id.tsx"
     }
   }
 }

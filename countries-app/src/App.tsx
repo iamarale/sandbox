@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DisplayCountry from "./components/DisplayCountry";
 import SearchCountries from "./components/SearchCountries";
 import CountryFilter from "./components/CountryFilter";
+import CountryDetails from "./components/CountryDetails";
 
 // types
 export interface CountryTypes {
@@ -27,13 +28,13 @@ export default function App() {
   const [countryOnClick, setCountryOnClick] = useState<CountryTypes | null>(
     null,
   );
-  const [selectFilter, setSelectFilter] = useState<string>("all");
+  const [selectFilter, setSelectFilter] = useState<string>("africa");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // data fetching
   useEffect(() => {
-    async function getAllCountries() {
+    const getAllCountries = async function () {
       try {
         setIsLoading(true);
         setError(null); // Reset the error state before fetching
@@ -63,7 +64,7 @@ export default function App() {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
     getAllCountries();
   }, [searchCountry]);
