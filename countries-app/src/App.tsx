@@ -24,6 +24,9 @@ export default function App() {
   // state
   const [data, setData] = useState<CountryTypes[] | null>(null);
   const [searchCountry, setSearchCountry] = useState<string>("");
+  const [countryOnClick, setCountryOnClick] = useState<CountryTypes | null>(
+    null,
+  );
   const [selectFilter, setSelectFilter] = useState<string>("all");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +47,6 @@ export default function App() {
           );
         }
 
-        console.log(res);
         // Error Handling
         if (!res.ok) {
           throw new Error(
@@ -95,7 +97,11 @@ export default function App() {
         </h1>
       ) : (
         data && (
-          <DisplayCountry data={filteredData!} searchCountry={searchCountry} />
+          <DisplayCountry
+            setCountryOnClick={setCountryOnClick}
+            data={filteredData!}
+            searchCountry={searchCountry}
+          />
         )
       )}
     </main>
