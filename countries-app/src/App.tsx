@@ -28,7 +28,7 @@ export default function App() {
   const [countryOnClick, setCountryOnClick] = useState<CountryTypes | null>(
     null,
   );
-  const [selectFilter, setSelectFilter] = useState<string>("africa");
+  const [selectFilter, setSelectFilter] = useState<string>("all");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 

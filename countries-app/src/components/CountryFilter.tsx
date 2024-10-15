@@ -13,7 +13,7 @@ export default function CountryFilter({
 
   return (
     <select className="bg-zinc-800 p-2" onChange={handleFilterChange}>
-      <option value="all">Filter by Region</option>
+      <option value="all">All</option>
       <option value="africa">Africa</option>
       <option value="americas">Americas</option>
       <option value="asia">Asia</option>
