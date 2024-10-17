@@ -16,11 +16,10 @@ This is one of many projects I've created in my sandbox enviroment. It's a simpl
 
 ## Todo
 
-[] Add a loading state
-[] Add a error state  
+[x] Add a loading state
+[x] Add a error state  
 [] Add a footer
 [] Add a theme switcher
-[]
 
 ## Technology
 
